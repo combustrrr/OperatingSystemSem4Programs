@@ -13,10 +13,10 @@ Below are the paths to each experiment in this repository:
 
 | Experiment | Path |
 |------------|------|
-| Experiment 5 | `/workspaces/TestRun/Experiment5/` |
-| Experiment 6 | `/workspaces/TestRun/Experiment6/` |
-| Experiment 7 | `/workspaces/TestRun/Experiment7/` |
-| ... | ... |
+| Experiment 5 | `https://github.com/combustrrr/OperatingSystemSem4Programs/tree/master/Experiment5` |
+| Experiment 6 | `https://github.com/combustrrr/OperatingSystemSem4Programs/tree/master/Experiment6` |
+| Experiment 7 | `https://github.com/combustrrr/OperatingSystemSem4Programs/tree/master/Experiment7` |
+
 
 
 ## Conclusion
