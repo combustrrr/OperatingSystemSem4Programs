@@ -1,0 +1,10 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Specific directory to ignore
+/workspaces/TestRun/experiment5/__pycache__
+
+# Screenshot file
+experiment5/Screenshot 2025-03-15 201916.png

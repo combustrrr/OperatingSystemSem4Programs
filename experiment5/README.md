@@ -8,17 +8,17 @@ In a banking system, multiple processes (ATM withdrawals, online transfers, and 
 
 ### Example Scenario
 
-Consider an account with an initial balance of $1000 and three concurrent transactions:
-1. ATM Process: Withdraw $500
-2. Online Banking Process: Transfer (withdraw) $300
-3. Branch Teller Process: Deposit $200
+Consider an account with an initial balance and three concurrent transactions:
+1. ATM Process: Withdrawal
+2. Online Banking Process: Transfer (withdrawal)
+3. Branch Teller Process: Deposit
 
-Without synchronization, all processes might read the initial balance of $1000 simultaneously:
-- The ATM would set the balance to $500 ($1000 - $500)
-- The online transfer would set the balance to $700 ($1000 - $300)
-- The branch deposit would set the balance to $1200 ($1000 + $200)
+Without synchronization, all processes might read the initial balance simultaneously:
+- The ATM would update the balance based on the initial value
+- The online transfer would update the balance based on the initial value
+- The branch deposit would update the balance based on the initial value
 
-Depending on which process finishes last, the final balance would be incorrect ($500, $700, or $1200) instead of the correct balance of $400 ($1000 - $500 - $300 + $200).
+Depending on which process finishes last, the final balance would be incorrect as it would not reflect all transactions properly. Only the effect of the last transaction would persist.
 
 ## The Solution: Semaphores
 
@@ -40,26 +40,26 @@ Our implementation uses binary semaphores to ensure mutual exclusion when access
    ```
    Thread 1 (ATM):                Thread 2 (Online):             Thread 3 (Branch):
    acquire semaphore              (waiting for semaphore)        (waiting for semaphore)
-   read balance ($1000)
-   calculate ($1000-$500)
-   update balance ($500)
+   read balance
+   calculate new balance
+   update balance
    release semaphore
                                   acquire semaphore              (waiting for semaphore)
-                                  read balance ($500)
-                                  calculate ($500-$300)
-                                  update balance ($200)
+                                  read balance
+                                  calculate new balance
+                                  update balance
                                   release semaphore
                                                                 acquire semaphore
-                                                                read balance ($200)
-                                                                calculate ($200+$200)
-                                                                update balance ($400)
+                                                                read balance
+                                                                calculate new balance
+                                                                update balance
                                                                 release semaphore
    ```
 
 4. **Final Balance Calculation**:
    - Because of the semaphore, each transaction sees the current balance after previous transactions
    - The transactions execute in sequence (even though they're launched concurrently)
-   - The final balance correctly reflects all operations: $1000 - $500 - $300 + $200 = $400
+   - The final balance correctly reflects all operations in the order they were executed
 
 ### Code Implementation
 
@@ -84,23 +84,12 @@ This pattern ensures that:
 2. No other thread can interleave its operations between our read and write
 3. Each transaction sees a consistent view of the account data
 
-## Sample Output
-
-Below is a screenshot showing the execution of the program with the semaphore solution:
-
-![Program Output](/workspaces/TestRun/experiment5/Screenshot%202025-03-15%20201916.png)
-
-The screenshot demonstrates how the program:
-1. Accepts user input for initial balance and transaction amounts
-2. Executes the transactions concurrently but with semaphore protection
-3. Shows the correct final balance that reflects all transactions
-
 ## How to Verify the Solution Works
 
 When you run the simulation:
-1. All three transaction processes attempt to run concurrently
+1. All transaction processes attempt to run concurrently
 2. The semaphore forces them to execute their critical sections one at a time
-3. The final balance will always be $400 (for the default example values)
+3. The final balance will always be correct, reflecting all transactions
 4. Without the semaphore, the final balance would be unpredictable and often incorrect
 
 ## Files in this Project
@@ -121,4 +110,4 @@ The program will prompt you for:
 3. Online transfer amount
 4. Branch deposit amount
 
-It will then execute these transactions concurrently with semaphore protection.
+It will then execute these transactions concurrently with semaphore protection and display the final balance.
