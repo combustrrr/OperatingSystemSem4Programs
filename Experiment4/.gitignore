@@ -1,0 +1,12 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+/workspaces/TestRun/Experiment4/A/Screenshot 2025-03-15 214903.png
+/workspaces/TestRun/Experiment4/A/Screenshot 2025-03-15 214917.png
+
+/workspaces/TestRun/Experiment4/B/Screenshot 2025-03-15 224308.png
+/workspaces/TestRun/Experiment4/B/Screenshot 2025-03-15 224322.png
+/workspaces/TestRun/Experiment4/B/Screenshot 2025-03-15 224332.png
+
+/workspaces/TestRun/Experiment4/C/Screenshot 2025-03-15 225141.png
